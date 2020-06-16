@@ -1,5 +1,7 @@
 <template>
-    $END$
+    <div class="adder-button-wrapper">
+        Добавить новую запись
+    </div>
 </template>
 
 <script>

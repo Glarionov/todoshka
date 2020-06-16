@@ -1,8 +1,12 @@
 <template>
-    $END$
+    <div class="bw">
+        bw
+    </div>
 </template>
 
 <script>
+
+
     export default {
         name: "bigWrapper"
     }
