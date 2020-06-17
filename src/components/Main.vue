@@ -2,7 +2,7 @@
     <div class="main-wrapper">
         <router-link to="/change/0"><AddNew text="Добавить новую запись" /></router-link>
         <div class="todoshorts-inluces" v-for="(item,index) in mainData" :key="index">
-            <TodoShort :todoData = "item"  />
+            <TodoShort :todoData = "item" :todoId = "index"  />
         </div>
 
     </div>

@@ -23,8 +23,12 @@ html, body {
   opacity: 0.5;
   position: absolute;
   z-index: 4;
-  display: none;
+  //display: none;
 
+}
+
+.add-new-includer {
+  z-index: 5;
 }
 
 .todo-short-wrapper {
@@ -105,3 +109,45 @@ a {  text-decoration: none;}
 
 }
 
+.top-short-changer {
+  display: inline-block;
+  background: orange;
+  //@include makeParamGrowingFromMinTosMax(height, 25, 50);
+}
+
+.top-short-deleter {
+  background: red;
+
+  //@include makeParamGrowingFromMinTosMax(height, 25, 50);
+}
+
+.todo-short-top-main-icons {
+  position: absolute;
+  right: 10px;
+  top: 0px;
+}
+
+.todo-short-top-main-icons {
+  position: relative;
+}
+
+.rel-parent {
+  position: relative;
+}
+
+.todo-short-top-main-icons {
+  position: absolute;
+  right: 10px;
+}
+
+.top-short-deleter, .top-short-changer {
+  display: inline-block;
+padding: 5px;
+border-radius: 5px;
+margin-right: 5px;
+cursor: pointer;
+}
+
+.adder-button-wrapper {
+  cursor: pointer;
+}

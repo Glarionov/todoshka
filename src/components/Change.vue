@@ -2,10 +2,20 @@
     <div class="change-wrapper">
         <div class="change-body">
             <div class="add-new-includer">
+                <div class="add-new-text-block">
 
-                <AddNew text="Добавить новый пункт" v-on:click="addNewItem" />
-               <div class="add-new-text-block">
+                </div>
+                <div class="button-includer" v-on:click="addNewItem">
+                    <AddNew text="Добавить новый пункт"  />
+                </div>
 
+                <div class="text-for-new">
+                    <input type="text" :style="adderStyle">
+                </div>
+
+
+                <div class="eboy" v-on:click="eboy">
+                    eeeeeeboy
                 </div>
             </div>
             <div class="change-header">
@@ -47,7 +57,8 @@
         },
         data: function() {
             return {
-                todoData: {}
+                todoData: {},
+                adderStyle: {}
             }
         },
         created() {
@@ -63,14 +74,22 @@
         methods: {
             loadData: function (id) {
                 let mainData = JSON.parse(localStorage.getItem('wholeList'));
-                /*g*/console.log('mainData'); //todo remove it
-                /*g*/console.log(mainData); //todo remove it
+                /*g*/
+                console.log('mainData'); //todo remove it
+                /*g*/
+                console.log(mainData); //todo remove it
                 this.todoData = mainData[id];
             },
-                      addNewItem () {
-              console.log('ggg')
-    }
+            addNewItem() {
+                console.log('ggg')
+                this.adderStyle.height = '50px';
+                this.$forceUpdate();
+            }
 
+            ,
+            eboy() {
+                console.log('eeeeeeeeeeee')
+            }
 
         },
         name: "Change"

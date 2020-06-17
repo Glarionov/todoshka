@@ -1,9 +1,26 @@
 <template>
     <div class="todo-short-wrapper">
-        <div class="todo-short-top-part ">
-            <div class="vert-centered-outer">
+        <div class="todo-short-top-part   rel-parent">
+            <div class="vert-centered-outer ">
                 <span class="todo-top-part-text vert-centered-inner">{{todoData.name}}</span>
             </div>
+<!--            <div class="rel-parent todo-short-top-main-icons-wrapper">-->
+                <div class="todo-short-top-main-icons vert-centered-outer ">
+                    <div class="vert-centered-inner">
+                        <router-link :to="'/change/' + todoId">
+                        <div class="top-short-changer ">
+                            Редактировать
+                        </div>
+                            </router-link>
+                        <div class="top-short-deleter ">
+                            Удалить
+                        </div>
+                    </div>
+
+                </div>
+<!--            </div>-->
+
+
 
 
         </div>
@@ -19,10 +36,11 @@
     import TodoShortPart from "./TodoShortPart";
     export default {
         components: {
-            TodoShortPart
+            TodoShortPart,
         },
         props: {
-            todoData: Object
+            todoData: Object,
+            todoId: Number
         },
         name: "TodoShort"
     }
