@@ -1,6 +1,6 @@
 <template>
     <div class="main-wrapper">
-        <AddNew />
+        <router-link to="/change/0"><AddNew text="Добавить новую запись" /></router-link>
         <div class="todoshorts-inluces" v-for="(item,index) in mainData" :key="index">
             <TodoShort :todoData = "item"  />
         </div>
@@ -13,21 +13,33 @@
     import TodoShort from "./subParts/TodoShort";
 
     import('../assets/scss/test.css')
+    import exampleData from '../assets/js/smallExampleData';
 
     //store.commit('increment')
 
 
     export default {
         created() {
-          this.t1();
+            // this.setExampleData();
+          this.prepareData();
         },
         methods: {
-          t1() {
+            setExampleData(dataType = 'small') {
+
+                /*g*/console.log('dataType'); //todo remove it
+                /*g*/console.log(dataType); //todo remove it
+                /*g*/console.log('exampleData'); //todo remove it
+                /*g*/console.log(exampleData); //todo remove it
+
+                localStorage.setItem('wholeList', JSON.stringify(exampleData))
+            },
+          prepareData() {
               console.log(this.$store)
-              localStorage.setItem('abc', this.$store.token + 'b')
-              this.$store.commit('increment')
-              console.log(this.$store.state.count
-              )
+              // localStorage.setItem('abc', this.$store.token + 'b')
+              // localStorage.setItem('wholeList', JSON.stringify({a: 'b'}))
+
+              this.$store.commit('increment');
+              this.mainData = JSON.parse(localStorage.getItem('wholeList'));
           }
         },
         components: {
@@ -37,34 +49,7 @@
         name: "Main",
         data: function () {
             return {
-                mainData: [
-                    {
-                        name: 'Починить машину',
-                        list: [
-                            {
-                                name: 'Починить колесо',
-                                done: false
-                            },
-                            {
-                                name: 'Починить двигатель',
-                                done: true
-                            }
-                        ]
-                    },
-                    {
-                        name: 'Погладить животных',
-                        list: [
-                            {
-                                name: 'Погладить собачку',
-                                done: false
-                            },
-                            {
-                                name: 'Погладить котика',
-                                done: true
-                            }
-                        ]
-                    }
-                ]
+                mainData: {}
             }
         }
     }

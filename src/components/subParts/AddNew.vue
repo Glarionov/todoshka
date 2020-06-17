@@ -1,11 +1,20 @@
 <template>
     <div class="adder-button-wrapper">
-        Добавить новую запись
+        <div class="vert-centered-outer">
+        <div class="vert-centered-inner">
+
+            {{text}}
+        </div>
+        </div>
+
     </div>
 </template>
 
 <script>
     export default {
+        props: {
+          text: String,
+        },
         name: "AddNew"
     }
 </script>

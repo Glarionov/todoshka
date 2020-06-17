@@ -1,0 +1,66 @@
+$minScreenKeyPoint: 400;
+$maxScreenKeyPoint: 1200;
+
+/// Возвращает линейную функцию от ширины экрана,
+/// которая принимает значение $min при ширине экрана $minScreenKeyPoint
+/// и $max при ширине экрана $maxScreenKeyPoint
+@function getFormulaOfGrowthBetweenMaxAndMinScreenPoints($min, $max) {
+    $growthFactor : ($max - $min) / ( $maxScreenKeyPoint - $minScreenKeyPoint);
+    $pixelValue : $min - $minScreenKeyPoint * $growthFactor;
+    $windowFactor: $growthFactor * 100;
+
+    @return calc(#{$pixelValue}px + #{$windowFactor}vw);
+}
+
+/// Устанавливает значение параметра таким образом,
+/// чтобы он принимал значение $min при ширине экрана $minScreenKeyPointToUse или меньше
+/// $max - при ширине экрана $maxScreenKeyPointToUse или больше
+/// и линейно рос от $min до $max при ширине экрана от $minScreenKeyPointToUse до $maxScreenKeyPointToUse
+@mixin makeParamGrowingFromMinTosMax($property, $min, $max, $minScreenKeyPointToUse: false, $maxScreenKeyPointToUse: false) {
+    @if ($minScreenKeyPointToUse == false) {
+      $localMinScr: $minScreenKeyPoint;
+    }
+
+    @if ($maxScreenKeyPointToUse == false) {
+        $localMaxScr: $maxScreenKeyPoint;
+    }
+
+    @media screen and (max-width: $minScreenKeyPoint + 'px') {
+        #{$property}: #{$min}px;
+    }
+    @media screen and (min-width: $minScreenKeyPoint + 'px') and (max-width: $maxScreenKeyPoint + 'px'){
+        #{$property}: getFormulaOfGrowthBetweenMaxAndMinScreenPoints($min, $max);
+    }
+    @media screen and (min-width: $maxScreenKeyPoint + 'px') {
+        #{$property}: #{$max}px;
+    }
+}
+
+@mixin centre($axis: "both"){
+    position:absolute;
+    @if $axis == "y"{
+        top:50%;
+        -webkit-transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -o-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+    @if $axis == "x"{
+        left:50%;
+        -webkit-transform: translateX(-50%);
+        -moz-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        -o-transform: translateX(-50%);
+        transform: translateX(-50%);
+    }
+    @if $axis == "both"{
+        top:50%;
+        left:50%;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+}

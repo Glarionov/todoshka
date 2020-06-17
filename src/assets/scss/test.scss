@@ -1,14 +1,30 @@
+@import 'scssHelpers.scss';
+
 html, body {
   height: 100%;
   margin: 0px;
 }
 
 .adder-button-wrapper {
-  background: #d1fcd1;
-  width: 90vw;
-  max-width: 400px;
-  height: 100px;
+  background: #13bb13;
   border-radius: 10px;
+  display: inline-block;
+  margin-top: 20px;
+  @include makeParamGrowingFromMinTosMax(height, 40, 100);
+  @include makeParamGrowingFromMinTosMax(width, 120, 300);
+  z-index: 10;
+}
+
+.add-new-text-block {
+  background: red;
+  @include makeParamGrowingFromMinTosMax(height, 40, 100);
+  @include makeParamGrowingFromMinTosMax(margin-top, -40, -100);
+  @include makeParamGrowingFromMinTosMax(width, 120, 300);
+  opacity: 0.5;
+  position: absolute;
+  z-index: 4;
+  display: none;
+
 }
 
 .todo-short-wrapper {
@@ -64,3 +80,28 @@ html, body {
   vertical-align: middle;
   display: table-cell;
 }
+
+.change-wrapper {
+  //color: white;
+}
+
+.todo-top-part-text {
+  font-size: 25px;
+}
+
+a {  text-decoration: none;}
+
+.adder-button-wrapper .vert-centered-outer{
+  width: 100%;
+    text-align: center;
+  font-size: 20px;
+  color: white;
+}
+
+.whole-content {
+  width: 95vw;
+  margin: 20px auto;
+  max-width: 1200px;
+
+}
+

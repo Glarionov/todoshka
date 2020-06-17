@@ -47,11 +47,20 @@ const router = new VueRouter({
   routes: [
     {path: '/t1', component: Test },
     {path: '/t2', component: Test2},
-    {path: '/main', component: Main},
-    {path: '/change', component: Change},
+    {path: '/main', component: Main, meta: {title: 'Основной список'}},
+    {path: '/change/:id', component: Change, meta: {title: 'Изменение записи'}},
 
-  ]
+  ],
+
 });
+
+  router.beforeEach((to, from, next) => {
+    /* It will change the title when the router is change*/
+    if (to.meta.title) {
+      document.title = to.meta.title;
+    }
+    next();
+  });
 
 // new Vue({
 //   render: h => h(App),

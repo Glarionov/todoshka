@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <div class="whole-content">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -15,12 +17,14 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  /*font-family: Avenir, Helvetica, Arial, sans-serif;*/
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   background: rgb(31, 1, 53);
+  background: rgb(160,160,100);
   width: 100%;
   height: 100%;
+  font-family: Verdana, Geneva, sans-serif, Avenir, Helvetica, Arial;
 }
 </style>
