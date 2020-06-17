@@ -11,6 +11,33 @@ import Test2 from './components/Test2.vue'
 import Main from './components/Main.vue'
 import Change from './components/Change.vue'
 
+
+const store = new Vuex.Store({
+  state: {
+    count: 1
+  },
+  mutations: {
+    increment (state) {
+      state.count++
+    },
+      SET_TOKEN(state, token) {
+        state.token = token
+      },
+  },
+  actions: {
+    async attempt({commit, state}, token) {
+      console.log('token = '+ token);
+      console.log(state
+      )
+      if (token) {
+        commit('SET_TOKEN', token)
+      }
+    }
+  }
+})
+
+console.log(store
+)
 console.log(VueRouter
 )
 console.log(Test
@@ -26,7 +53,20 @@ const router = new VueRouter({
   ]
 });
 
-new Vue({
-  render: h => h(App),
-   router
-}).$mount('#app')
+// new Vue({
+//   render: h => h(App),
+//    router,
+//   store
+// }).$mount('#app')
+
+store.dispatch('attempt', localStorage.getItem('abc')).then(() => {
+  new Vue({
+    // el: '#app',
+    // components: { App },
+    router,
+    store,
+    render: h => h(App),
+    // subscriber
+  }).$mount('#app');
+})
+

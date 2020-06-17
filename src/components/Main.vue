@@ -13,7 +13,23 @@
     import TodoShort from "./subParts/TodoShort";
 
     import('../assets/scss/test.css')
+
+    //store.commit('increment')
+
+
     export default {
+        created() {
+          this.t1();
+        },
+        methods: {
+          t1() {
+              console.log(this.$store)
+              localStorage.setItem('abc', this.$store.token + 'b')
+              this.$store.commit('increment')
+              console.log(this.$store.state.count
+              )
+          }
+        },
         components: {
             AddNew,
             TodoShort
