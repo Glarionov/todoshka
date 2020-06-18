@@ -10,9 +10,13 @@
                 </div>
 
                 <div class="text-for-new">
-                    <input type="text" :style="adderStyle">
+                    <input type="text" :style="adderStyle" v-model="newTodoItemName">
                 </div>
 
+
+                <div class="button-includer" v-on:click="sendNewItem">
+                    <AddNew text="OK"  />
+                </div>
 
                 <div class="eboy" v-on:click="eboy">
                     eeeeeeboy
@@ -58,17 +62,18 @@
         data: function() {
             return {
                 todoData: {},
-                adderStyle: {}
+                adderStyle: {},
+                newTodoItemName: '',
+                listId: 0
             }
         },
         created() {
-            let listId = 0;
             if (this.$route.params.id) {
-                listId = this.$route.params.id
-                this.loadData(listId)
+                this.listId = this.$route.params.id
+                this.loadData(this.listId)
             } else {
-/*g*/console.log('listId'); //todo remove it
-/*g*/console.log(listId); //todo remove it
+                /*g*/console.log('this.listId'); //todo remove it
+                /*g*/console.log(this.listId); //todo remove it
             }
         },
         methods: {
@@ -89,6 +94,13 @@
             ,
             eboy() {
                 console.log('eeeeeeeeeeee')
+            }
+            ,
+            sendNewItem() {
+                /*g*/console.log('this.newTodoItemName'); //todo remove it
+                /*g*/console.log(this.newTodoItemName); //todo remove it
+                /*g*/console.log('this.listId'); //todo remove it
+                /*g*/console.log(this.listId); //todo remove it
             }
 
         },

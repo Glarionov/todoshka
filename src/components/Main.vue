@@ -20,6 +20,15 @@
 
     export default {
         created() {
+
+            console.log('eeeeeeeeeeeeeeeee' +
+                '')
+
+            this.$store.dispatch('incrementer');
+            this.$store.dispatch('incrementer');
+            console.log('UNDO')
+            this.undo();
+            this.$store.dispatch('incrementer');
             // this.setExampleData();
           this.prepareData();
         },

@@ -40,7 +40,7 @@
         },
         props: {
             todoData: Object,
-            todoId: Number
+            todoId: String
         },
         name: "TodoShort"
     }

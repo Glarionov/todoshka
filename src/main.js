@@ -11,10 +11,32 @@ import Test2 from './components/Test2.vue'
 import Main from './components/Main.vue'
 import Change from './components/Change.vue'
 
+import VuexUndoRedo  from './assets/js/undoRedo';
+Vue.use(VuexUndoRedo );
+/*g*/console.log('VuexUndoRedo '); //todo remove it
+/*g*/console.log(VuexUndoRedo ); //todo remove it
+
+// new Vuex.Store({
+//   state: {
+//     myVal: null
+//   },
+//   mutations: {
+//     emptyState() {
+//       this.replaceState({ myval: null });
+//     }
+//   }
+// });
 
 const store = new Vuex.Store({
+      data: function () {
+      return {
+        actionHistory: []
+      }
+    },
   state: {
-    count: 1
+    count: 1,
+    mainData: {},
+    myVal: null
   },
   mutations: {
     increment (state) {
@@ -23,8 +45,28 @@ const store = new Vuex.Store({
       SET_TOKEN(state, token) {
         state.token = token
       },
+    emptyState() {
+      this.replaceState({ myval: null });
+    }
   },
   actions: {
+        incrementer({ commit }) {
+          console.log('lllllllllllllll')
+    commit('increment')
+
+          /*g*/console.log('this.state.count'); //todo remove it
+          /*g*/console.log(this.state.count); //todo remove it
+    commit('increment')
+
+          /*g*/console.log('this.state.count'); //todo remove it
+          /*g*/console.log(this.state.count); //todo remove i
+
+          // let ur = new VuexUndoRedo();
+
+          // this.$VuexUndoRedo.undo();
+          /*g*/console.log('this.state.count'); //todo remove it
+          /*g*/console.log(this.state.count); //todo remove it
+        },
     async attempt({commit, state}, token) {
       console.log('token = '+ token);
       console.log(state
@@ -32,9 +74,15 @@ const store = new Vuex.Store({
       if (token) {
         commit('SET_TOKEN', token)
       }
+    },
+    pushMainState() {
+
     }
-  }
+  },
+
 })
+
+
 
 console.log(store
 )
@@ -47,7 +95,7 @@ const router = new VueRouter({
   routes: [
     {path: '/t1', component: Test },
     {path: '/t2', component: Test2},
-    {path: '/main', component: Main, meta: {title: 'Основной список'}},
+    {path: '/', component: Main, meta: {title: 'Основной список'}},
     {path: '/change/:id', component: Change, meta: {title: 'Изменение записи'}},
 
   ],
