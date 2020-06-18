@@ -38,6 +38,9 @@
 
 
         </div>
+
+
+
         <div class="todo-short-bottom-part">
             <div class="todo-short-list-inludes"  v-for="(item,index) in todoData.list" :key="index">
                 <TodoFullPart :partData="item" />
@@ -68,8 +71,12 @@
             }
         },
         created() {
+
+            this.$store.commit('getFromLocalStoreTodoListData');
             if (this.$route.params.id) {
-                this.listId = this.$route.params.id
+                this.listId = parseInt(this.$route.params.id)
+                /*g*/console.log('this.listId'); //todo remove it
+                /*g*/console.log(this.listId); //todo remove it
                 this.loadData(this.listId)
             } else {
                 /*g*/console.log('this.listId'); //todo remove it
@@ -78,12 +85,15 @@
         },
         methods: {
             loadData: function (id) {
-                let mainData = JSON.parse(localStorage.getItem('wholeList'));
+                let mainData = JSON.parse(localStorage.getItem('todoListData'));
+
+
                 /*g*/
                 console.log('mainData'); //todo remove it
                 /*g*/
                 console.log(mainData); //todo remove it
                 this.todoData = mainData[id];
+                this.$store.commit('saveTodoList',{itemNewId: id, newData: this.todoData});
             },
             addNewItem() {
                 console.log('ggg')
@@ -100,7 +110,9 @@
                 /*g*/console.log('this.newTodoItemName'); //todo remove it
                 /*g*/console.log(this.newTodoItemName); //todo remove it
                 /*g*/console.log('this.listId'); //todo remove it
-                /*g*/console.log(this.listId); //todo remove it
+                /*g*/console.log(this.listId); //todo remove it\
+
+                this.$store.commit('saveTodoItem', {listId: this.listId, newData: {name: this.newTodoItemName}});
             }
 
         },
