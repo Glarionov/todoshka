@@ -11,6 +11,7 @@
     "lint": "vue-cli-service lint",
     "start": "vue-cli-service serve"
   },
+  "heroku-postinstall": "npm install && npm run build",
   "dependencies": {
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
