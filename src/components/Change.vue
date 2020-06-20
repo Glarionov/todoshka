@@ -2,6 +2,7 @@
     <div class="change-wrapper">
         <div class="change-body">
             <div class="add-new-includer">
+                {{todoData}}
                 <div class="add-new-text-block">
 
                 </div>
@@ -43,7 +44,7 @@
 
         <div class="todo-short-bottom-part">
             <div class="todo-short-list-inludes"  v-for="(item,index) in todoData.list" :key="index">
-                <TodoFullPart :partData="item" />
+                <TodoFullPart :partData="item" :listId="listId" :itemId="parseInt(index)"/>
             </div>
         </div>
     </div>
@@ -56,6 +57,8 @@
 <script>
     import TodoFullPart from "./subParts/TodoFullPart";
     import AddNew from "./subParts/AddNew";
+
+    //heroku config:set NPM_CONFIG_PRODUCTION=false YARN_PRODUCTION=false todo remove
 
     export default {
                 components: {
@@ -113,6 +116,7 @@
                 /*g*/console.log(this.listId); //todo remove it\
 
                 this.$store.commit('saveTodoItem', {listId: this.listId, newData: {name: this.newTodoItemName}});
+
             }
 
         },

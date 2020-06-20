@@ -116,8 +116,21 @@ const store = new Vuex.Store({
       /*g*/console.log(commit); //todo remove it
       // commit({})
     },
+    deleteTodoItem(state, payload) {
+      /*g*/console.log('||||state.todoListData'); //todo remove it
+      /*g*/console.log(state.todoListData); //todo remove it
+      delete state.todoListData[payload.listId]['list'][payload.itemId];
+      /*g*/console.log('_____state.todoListData'); //todo remove it
+      /*g*/console.log(state.todoListData); //todo remove it
+    }
   },
   actions: {
+        deleteTodoItemUsingStorage({commit}, payload) {
+          /*g*/console.log('payload'); //todo remove it
+          /*g*/console.log(payload); //todo remove it
+          commit('deleteTodoItem', payload);
+          commit('updateLocalStoreTodoListData');
+        },
         incrementer({ commit }) {
 
     commit('increment')

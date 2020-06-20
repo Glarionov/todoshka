@@ -1,6 +1,6 @@
 <template>
     <div class="todo-short-wrapper">
-        <div class="todo-short-top-part   rel-parent">
+        <div class="todo-short-top-part">
             <div class="vert-centered-outer ">
                 <span class="todo-top-part-text vert-centered-inner">{{todoData.name}}</span>
             </div>
@@ -12,7 +12,7 @@
                             Редактировать
                         </div>
                             </router-link>
-                        <div class="top-short-deleter ">
+                        <div class="top-short-deleter "  v-on:click="deleteTodoList">
                             Удалить
                         </div>
                     </div>
@@ -40,7 +40,15 @@
         },
         props: {
             todoData: Object,
-            todoId: String
+            todoId: String,
+            itemId: Number
+        },
+        methods: {
+            deleteTodoList() {
+                /*g*/console.log('todoId'); //todo remove it
+                /*g*/console.log(this.todoId); //todo remove it
+
+            }
         },
         name: "TodoShort"
     }
