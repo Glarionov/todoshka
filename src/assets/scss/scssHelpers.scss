@@ -1,5 +1,7 @@
 $minScreenKeyPoint: 400;
 $maxScreenKeyPoint: 1200;
+$mediumScreen: 768px;
+
 
 /// Возвращает линейную функцию от ширины экрана,
 /// которая принимает значение $min при ширине экрана $minScreenKeyPoint
@@ -16,7 +18,7 @@ $maxScreenKeyPoint: 1200;
 /// чтобы он принимал значение $min при ширине экрана $minScreenKeyPointToUse или меньше
 /// $max - при ширине экрана $maxScreenKeyPointToUse или больше
 /// и линейно рос от $min до $max при ширине экрана от $minScreenKeyPointToUse до $maxScreenKeyPointToUse
-@mixin makeParamGrowingFromMinTosMax($property, $min, $max, $minScreenKeyPointToUse: false, $maxScreenKeyPointToUse: false) {
+@mixin makeParamGrowingFromMinTosMax($property, $min, $max, $minScreenKeyPointToUse: false, $maxScreenKeyPointToUse: false, $important: false) {
     @if ($minScreenKeyPointToUse == false) {
       $localMinScr: $minScreenKeyPoint;
     }
@@ -25,14 +27,28 @@ $maxScreenKeyPoint: 1200;
         $localMaxScr: $maxScreenKeyPoint;
     }
 
+    $importantString : '';
+
+    @if ($important) {
+        $importantString: '!important';
+    }
+    $importantString: '!important';
     @media screen and (max-width: $minScreenKeyPoint + 'px') {
-        #{$property}: #{$min}px;
+        #{$property}: #{$min}px #{$importantString};
     }
     @media screen and (min-width: $minScreenKeyPoint + 'px') and (max-width: $maxScreenKeyPoint + 'px'){
-        #{$property}: getFormulaOfGrowthBetweenMaxAndMinScreenPoints($min, $max);
+        #{$property}: getFormulaOfGrowthBetweenMaxAndMinScreenPoints($min, $max) #{$importantString};
     }
+
     @media screen and (min-width: $maxScreenKeyPoint + 'px') {
-        #{$property}: #{$max}px;
+        #{$property}: #{$max}px #{$importantString};
+    }
+}
+
+@mixin togglePropertyUnderAndAboveMediumScreen($property, $smallValue, $bigValue) {
+    #{$property}: #{$bigValue};
+    @media screen and (max-width: $mediumScreen) {
+        #{$property}: #{$smallValue};
     }
 }
 

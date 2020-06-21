@@ -1,9 +1,7 @@
 <template>
     <div class="main-wrapper">
-        <router-link to="/change/0"><AddNew text="Добавить новую запись" /></router-link>
+        <router-link to="/change/0" ><AddNew text="Add new Todo" /></router-link>
         <div class="todoshorts-inluces" v-for="(item,index) in mainData" :key="index">
-            {{item}}
-            {{index}}
             <TodoShort :todoData = "item" :todoId = "index"  />
         </div>
 
@@ -23,8 +21,6 @@
     export default {
         created() {
 
-            console.log('eeeeeeeeeeeeeeeee' +
-                '')
 
 
             // this.$store.commit('saveTodoList',
@@ -61,23 +57,54 @@
         methods: {
             setExampleData(dataType = 'small') {
 
+
                 /*g*/console.log('dataType'); //todo remove it
                 /*g*/console.log(dataType); //todo remove it
-                /*g*/console.log('exampleData'); //todo remыыove it
-                /*g*/console.log(exampleData); //todo remove it
-
                 localStorage.setItem('todoListData', JSON.stringify(exampleData))
             },
+            loadTodos() {
+               let wholeTodos = JSON.parse(localStorage.getItem('todoListData'));
+               /*g*/console.log('wholeTodos'); //todo remove it
+               /*g*/console.log(wholeTodos); //todo remove it
+                let newTodos = {};
+
+                for (let index in wholeTodos) {
+                    let todoData = wholeTodos[index];
+                    /*g*/console.log('todoData.list'); //todo remove it
+                    /*g*/console.log(todoData.list); //todo remove it
+                    if (typeof todoData.list !== "undefined" ) {
+                        newTodos = {};
+                        let counter = 0;
+                        for (let noteId in todoData.list) {
+
+                            newTodos[noteId] = todoData.list[noteId];
+
+                            counter++;
+                            if (counter >= this.notesPerPage) {
+                                break;
+                            }
+                        }
+                        /*g*/console.log('newTodos'); //todo remove it
+                        /*g*/console.log(newTodos); //todo remove it
+                        wholeTodos[index].list = newTodos;
+                    }
+                }
+
+                this.mainData = wholeTodos;
+
+            },
           prepareData() {
-              // console.log(this.$store)
               // localStorage.setItem('abc', this.$store.token + 'b')
               // localStorage.setItem('wholeList', JSON.stringify({a: 'b'}))
 
               // this.$store.commit('increment');
-              this.mainData = JSON.parse(localStorage.getItem('todoListData'));
-              /*g*/console.log('44444444444this.$store.todoListData'); //todo remove it
-              /*g*/console.log(this.$store.state.todoListData); //todo remove it
-          }
+              this.loadTodos();
+              // this.mainData = JSON.parse(localStorage.getItem('todoListData'));
+          },
+            deleteTodo(id) {
+                delete this.mainData[id];
+                this.$forceUpdate();
+            }
         },
         components: {
             AddNew,
@@ -86,7 +113,8 @@
         name: "Main",
         data: function () {
             return {
-                mainData: {}
+                mainData: {},
+                notesPerPage: 2
             }
         }
     }

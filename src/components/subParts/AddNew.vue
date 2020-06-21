@@ -1,12 +1,6 @@
 <template>
-    <div class="adder-button-wrapper">
-        <div class="vert-centered-outer">
-        <div class="vert-centered-inner">
-
+    <div class="adder-button-wrapper default-button">
             {{text}}
-        </div>
-        </div>
-
     </div>
 </template>
 

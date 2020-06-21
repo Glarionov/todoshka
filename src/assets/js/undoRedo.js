@@ -38,6 +38,9 @@ module.exports = {
         redo() {
           let commit = this.undone.pop();
           this.newMutation = false;
+          /*g*/console.log('commit'); //todo remove it
+          /*g*/console.log(commit); //todo remove it
+
           switch (typeof commit.payload) {
             case 'object':
               this.$store.commit(`${commit.type}`, Object.assign({}, commit.payload));
