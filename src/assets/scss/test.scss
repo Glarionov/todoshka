@@ -431,10 +431,17 @@ cursor: pointer;
   .redo-button {
     margin-top: $undoSquareSizePx;
   }
+
+  .blocked {
+    opacity: 0.2;
+    &:hover {
+      opacity: 0.2;
+    }
+  }
 }
 
 
 
-.todo-short-bottom-part {
+.todo-change-page-bottom-part {
   display: flex;
 }

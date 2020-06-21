@@ -322,6 +322,10 @@ a {
       opacity: 1; }
   .undo-redo-buttons .redo-button {
     margin-top: 50px; }
+  .undo-redo-buttons .blocked {
+    opacity: 0.2; }
+    .undo-redo-buttons .blocked:hover {
+      opacity: 0.2; }
 
-.todo-short-bottom-part {
+.todo-change-page-bottom-part {
   display: flex; }

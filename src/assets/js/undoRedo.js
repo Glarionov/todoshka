@@ -49,6 +49,7 @@ module.exports = {
               this.$store.commit(`${commit.type}`, commit.payload);
           }
           this.newMutation = true;
+          this.$forceUpdate();
         },
         undo() {
           this.undone.push(this.done.pop());
@@ -65,6 +66,7 @@ module.exports = {
             this.done.pop();
           });
           this.newMutation = true;
+          this.$forceUpdate();
         }
       }
     });

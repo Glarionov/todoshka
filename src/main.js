@@ -57,6 +57,7 @@ const store = new Vuex.Store({
     todoListNewId: 1,
     test: {},
     currentlyEditingList: {},
+    baseEditingList: {},
     editingListId: 0
   },
   mutations: {
@@ -67,6 +68,9 @@ const store = new Vuex.Store({
         state.token = token
       },
     emptyState() {
+      /*g*/console.log('this.baseEditingList'); //todo remove it
+      /*g*/console.log(this.baseEditingList); //todo remove it
+
       this.replaceState({
         myval: null, count: 0, todoListData: {}, todoListNewId: 1, currentlyEditingList: {}
       });
@@ -97,17 +101,11 @@ const store = new Vuex.Store({
       }
     },
     setCurrentlyEditingList(state, payload) {
-      /*g*/console.log('payload'); //todo remove it
-      /*g*/console.log(payload); //todo remove it
-      /*g*/console.log('typeof payload.listId'); //todo remove it
-      /*g*/console.log(typeof payload.listId); //todo remove it
       if (typeof payload.listId !== "undefined") {
         state.editingListId =  payload.listId;
         let storageListData = JSON.parse(localStorage.getItem('todoListData'));
         if (typeof storageListData[payload.listId] !== "undefined") {
           state.currentlyEditingList = storageListData[payload.listId];
-          /*g*/console.log('this.currentlyEditingList'); //todo remove it
-          /*g*/console.log(this.currentlyEditingList); //todo remove it
         }
       } else {
         state.currentlyEditingList = {
@@ -115,9 +113,8 @@ const store = new Vuex.Store({
           list: {},
           itemNewId: 1
         };
-        /*g*/console.log('this.currentlyEditingList'); //todo remove it
-        /*g*/console.log(this.currentlyEditingList); //todo remove it
       }
+      this.baseEditingList = JSON.parse(JSON.stringify(state.currentlyEditingList));
     },
     saveCurrentlyEditingListNoteInVuex(state, payload) {
       let itemId;
@@ -129,11 +126,13 @@ const store = new Vuex.Store({
         } else {
           itemId = payload.itemId;
         }
-        state.currentlyEditingList.list[itemId] = payload.newData;
+        /*g*/console.log('=payload'); //todo remove it
+        /*g*/console.log(payload); //todo remove it
+        // state.currentlyEditingList.list[itemId] = payload.newData;
+        state.currentlyEditingList.list[itemId] = Object.assign({}, payload.newData);
         /*g*/console.log('----state.currentlyEditingList'); //todo remove it
         /*g*/console.log(state.currentlyEditingList); //todo remove it
-        /*g*/console.log('payload'); //todo remove it
-        /*g*/console.log(payload); //todo remove it
+
       }
 
     },
@@ -212,6 +211,14 @@ const store = new Vuex.Store({
       delete state.currentlyEditingList.list[payload.itemId];
       /*g*/console.log('_____state.todoListData'); //todo remove it
       /*g*/console.log(state.todoListData); //todo remove it
+    },
+    changeDoneStatus(state, payload) {
+      /*g*/console.log('payload'); //todo remove it
+      /*g*/console.log(payload); //todo remove it
+      state.currentlyEditingList.list[payload.itemId].done = payload.status;
+      /*g*/console.log('state.currentlyEditingList'); //todo remove it
+      /*g*/console.log(state.currentlyEditingList); //todo remove it
+
     }
   },
   actions: {

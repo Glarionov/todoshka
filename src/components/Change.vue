@@ -54,7 +54,7 @@
 
 
 
-        <div class="todo-short-bottom-part">
+        <div class="todo-change-page-bottom-part">
 
             <div class="todo-bottom-left-part">
 
@@ -76,8 +76,8 @@
                 </div>
             </div>
             <div class="undo-redo-buttons">
-                <div class="default-button undo-button" @click="undoLastAction">Undo</div>
-                <div class="default-button redo-button" @click="redoLastAction">Redo</div>
+                <div class="default-button undo-button" @click="undoLastAction" :class="{ blocked: !canUndo}">Undo</div>
+                <div class="default-button redo-button" @click="redoLastAction" :class="{ blocked: !canRedo}">Redo</div>
             </div>
         </div>
     </div>
@@ -132,19 +132,21 @@
                 this.nameChanging = true;
                 this.newList = true;
                 this.$store.commit('setCurrentlyEditingList', {});
+
                 /*g*/console.log('t11111111111his.listId'); //todo remove it
                 /*g*/console.log(this.$store.state.editingListId); //todo remove it
             }
+            // this.done = [];
         },
         computed: {
             scrollablePage: () => {
                 return true;
             },
             canRedo() {
-                return this.undone.length;
+                return this.undone.length ;
             },
             canUndo() {
-                return this.done.length;
+                return this.done.length > 1;
             }
         },
         methods: {
@@ -228,10 +230,16 @@
                     this.$dialog.alert('Add some text before saving');
                 } else {
                     let itemId = this.$store.state.currentlyEditingList.itemNewId;
-                    this.$store.state.currentlyEditingList.itemNewId++;
+                    // this.$store.state.currentlyEditingList.itemNewId++;
+                    /*g*/console.log('this.$store.state.currentlyEditingList.itemNewId'); //todo remove it
+                    /*g*/console.log(this.$store.state.currentlyEditingList.itemNewId); //todo remove it
+                    /*g*/console.log('itemId'); //todo remove it
+                    /*g*/console.log(itemId); //todo remove it
                     this.$store.commit('saveCurrentlyEditingListNoteInVuex',
-                        {itemId: itemId, newData:
-                            {name: this.$refs.noteTextAdder.currentlyChangingTextValue}})
+                        {
+                            // itemId: itemId,
+                            newData:
+                            {name: this.$refs.noteTextAdder.currentlyChangingTextValue, done: false}})
                     this.newTodoItemName = '';
                     this.$refs.noteTextAdder.clearTextEditing();
                     this.$forceUpdate();

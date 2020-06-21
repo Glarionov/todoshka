@@ -3,10 +3,13 @@
         >
                 <div class="part-data-name-and-checkbox">
                     <div class="part-data-checkbox-wrapper">
-                        <label><input class="part-data-checkbox" type="checkbox" v-model="partData.done"/> </label>
+                        <label><input class="part-data-checkbox"
+                                      @click="changeDoneStatus"
+                                      type="checkbox" v-model="partData.done"/> </label>
+                        <label for="checkbox">{{ partData.done }}</label>
                     </div>
 
-
+                    partData.done={{partData.done}}
                     <div class="text-or-textarea-part" @keyup.ctrl.enter="saveTodoItemChanges">
                         <TextEditorTDL  v-if="changing" ref="noteTextEditor"
                                         :currentlyChangingText="currentlyChangingText"
@@ -19,7 +22,7 @@
                             <div class="cancel-item-editing todo-text-edit-button default-button" v-on:click="stopTextEditing">Cancel</div>
                         </TextEditorTDL>
                         <div class="simple-text" v-else>
-                            {{partData.name}}
+                            {{partData.name}} id={{itemId}}
                         </div>
                     </div>
 <!--                    <textarea ref="tt" @keyup="cctt" :style="ts"/>-->
@@ -184,9 +187,30 @@
             },
             handleTextChangeBlur() {
 
+            },
+            changeDoneStatus() {
+
+                /*g*/console.log('!this.partData.done'); //todo remove it
+                /*g*/console.log(!this.partData.done); //todo remove it
+
+                this.$nextTick(function () {
+                    this.$forceUpdate();
+                });
+                this.$store.commit('changeDoneStatus', {itemId: this.itemId, status: !this.partData.done})
+                // this.$nextTick(function () {
+                //     /*g*/console.log('partData.done'); //todo remove it
+                //     /*g*/console.log(this.partData.done); //todo remove it
+                //     this.$store.commit('changeDoneStatus', {itemId: this.itemId, status: this.partData.done})
+                // })
+
             }
         },
 
+        watch: {
+            partData: () => {
+                // this.$forceUpdate();
+            }
+        },
         name: "TodoFullPart"
     }
 </script>
