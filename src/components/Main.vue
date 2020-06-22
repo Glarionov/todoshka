@@ -64,14 +64,10 @@
             },
             loadTodos() {
                let wholeTodos = JSON.parse(localStorage.getItem('todoListData'));
-               /*g*/console.log('wholeTodos'); //todo remove it
-               /*g*/console.log(wholeTodos); //todo remove it
                 let newTodos = {};
 
                 for (let index in wholeTodos) {
                     let todoData = wholeTodos[index];
-                    /*g*/console.log('todoData.list'); //todo remove it
-                    /*g*/console.log(todoData.list); //todo remove it
                     if (typeof todoData.list !== "undefined" ) {
                         newTodos = {};
                         let counter = 0;
@@ -84,8 +80,6 @@
                                 break;
                             }
                         }
-                        /*g*/console.log('newTodos'); //todo remove it
-                        /*g*/console.log(newTodos); //todo remove it
                         wholeTodos[index].list = newTodos;
                     }
                 }

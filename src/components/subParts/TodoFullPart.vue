@@ -6,10 +6,8 @@
                         <label><input class="part-data-checkbox"
                                       @click="changeDoneStatus"
                                       type="checkbox" v-model="partData.done"/> </label>
-                        <label for="checkbox">{{ partData.done }}</label>
                     </div>
 
-                    partData.done={{partData.done}}
                     <div class="text-or-textarea-part" @keyup.ctrl.enter="saveTodoItemChanges">
                         <TextEditorTDL  v-if="changing" ref="noteTextEditor"
                                         :currentlyChangingText="currentlyChangingText"
@@ -22,7 +20,7 @@
                             <div class="cancel-item-editing todo-text-edit-button default-button" v-on:click="stopTextEditing">Cancel</div>
                         </TextEditorTDL>
                         <div class="simple-text" v-else>
-                            {{partData.name}} id={{itemId}}
+                            {{partData.name}}
                         </div>
                     </div>
 <!--                    <textarea ref="tt" @keyup="cctt" :style="ts"/>-->

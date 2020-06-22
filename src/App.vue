@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="whole-content">
-      <header>SUPERNOTE 300</header>
+      <header>Todo Editor</header>
       <router-view></router-view>
     </div>
   </div>

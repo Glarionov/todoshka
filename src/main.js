@@ -72,23 +72,33 @@ const store = new Vuex.Store({
       /*g*/console.log(this.baseEditingList); //todo remove it
 
       this.replaceState({
-        myval: null, count: 0, todoListData: {}, todoListNewId: 1, currentlyEditingList: {}
+        myval: null, count: 0, todoListData: {}, todoListNewId: 1, currentlyEditingList: {
+          name: '',
+          list: {},
+          itemNewId: 1
+        },
+        editingListId: 0
       });
     },
     saveTodoList(state, payload) {
 
 
-      let newId;
-      if (typeof payload.itemNewId === "undefined") {
-        newId = state.todoListNewId;
-        state.todoListNewId++;
-      } else {
-        newId = payload.itemNewId;
-      }
-      if (typeof payload.newData['itemNewId']  == "undefined" ) {
-        payload.newData['itemNewId'] = 1;
-      }
-      state.todoListData[newId] = payload.newData;
+      /*g*/console.log('state'); //todo remove it
+      /*g*/console.log(state); //todo remove it
+      /*g*/console.log('payload'); //todo remove it
+      /*g*/console.log(payload); //todo remove it
+      // let newId;
+      // if (typeof payload.itemNewId === "undefined") {
+      //   newId = state.todoListNewId;
+      //   state.todoListNewId++;
+      // } else {
+      //   newId = payload.itemNewId;
+      // }
+      // if (typeof payload.newData['itemNewId']  == "undefined" ) {
+      //   payload.newData['itemNewId'] = 1;
+      // }
+      // state.todoListData[newId] = payload.newData;
+
 
       // this.commit('updateLocalStoreTodoListData')
       // localStorage.setItem('todoListData', JSON.stringify(state.todoListData))
@@ -116,6 +126,12 @@ const store = new Vuex.Store({
       }
       this.baseEditingList = JSON.parse(JSON.stringify(state.currentlyEditingList));
     },
+    setListName(state, payload) {
+      if (typeof payload.name !== "undefined") {
+        state.currentlyEditingList.name = payload.name;
+      }
+
+    },
     saveCurrentlyEditingListNoteInVuex(state, payload) {
       let itemId;
       if (typeof payload.newData !== "undefined") {
@@ -129,6 +145,9 @@ const store = new Vuex.Store({
         /*g*/console.log('=payload'); //todo remove it
         /*g*/console.log(payload); //todo remove it
         // state.currentlyEditingList.list[itemId] = payload.newData;
+        /*g*/console.log('state.currentlyEditingList'); //todo remove it
+        /*g*/console.log(state.currentlyEditingList); //todo remove it
+
         state.currentlyEditingList.list[itemId] = Object.assign({}, payload.newData);
         /*g*/console.log('----state.currentlyEditingList'); //todo remove it
         /*g*/console.log(state.currentlyEditingList); //todo remove it
@@ -175,9 +194,18 @@ const store = new Vuex.Store({
           state.editingListId = parseInt(newListId);
         }
         let newId = state.editingListId + 1;
+/*g*/console.log('newId'); //todo remove it
+/*g*/console.log(newId); //todo remove it
         localStorage.setItem('newListId', newId + '');
       }
+
       let storageListData = JSON.parse(localStorage.getItem('todoListData'));
+
+      /*g*/console.log('storageListData'); //todo remove it
+      /*g*/console.log(storageListData); //todo remove it
+      if (typeof storageListData === "undefined" || !storageListData) {
+        storageListData = {};
+      }
 
       storageListData[state.editingListId] = state.currentlyEditingList;
       // state.editingListId++;

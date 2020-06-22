@@ -3,6 +3,7 @@
         <div class="list-save-button default-button" v-on:click="saveListChanges">
             Save and exit
         </div>
+
         <div class="list-save-button default-button" v-on:click="saveListChanges(false)">
             Save
         </div>

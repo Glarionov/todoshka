@@ -6,9 +6,6 @@
             <div class="editing-todo" v-else>Editing Todo №{{$route.params.id}}</div>
         </div>
         <div class="change-body">
-            canUndo={{canUndo}}
-            this.undone={{this.undone}}
-            this.done={{this.done}}
             <SaveCancelDeleteButtons />
             <div class="add-new-includer">
 
@@ -83,7 +80,6 @@
     </div>
             </div>
         </div>
-        <SaveCancelDeleteButtons extraClass="bottom-buttons" />
     </div>
 </template>
 
@@ -131,7 +127,8 @@
             } else {
                 this.nameChanging = true;
                 this.newList = true;
-                this.$store.commit('setCurrentlyEditingList', {});
+                // this.$store.commit('setCurrentlyEditingList', {});
+                this.$store.commit('emptyState');
 
                 /*g*/console.log('t11111111111his.listId'); //todo remove it
                 /*g*/console.log(this.$store.state.editingListId); //todo remove it
@@ -152,18 +149,30 @@
         methods: {
             saveListChanges(closeEditor = true) {
                 console.log('SAVE')
-                let saveData = {newData: this.todoData};
-                if (this.itemNewId) {
-                    saveData['itemNewId'] = this.itemNewId;
-                }
+                // let saveData = {newData: this.todoData};
+                // if (this.itemNewId) {
+                //     saveData['itemNewId'] = this.itemNewId;
+                // }
 
-                /*g*/console.log('saveData'); //todo remove it
-                /*g*/console.log(saveData); //todo remove it
-                this.$store.commit('saveTodoList',saveData);
+                // this.$store.commit('saveTodoList',saveData);
+                let needRedirect = false;
+                /*g*/console.log('this.$store.state.editingListId'); //todo remove it
+                /*g*/console.log(this.$store.state.editingListId); //todo remove it
+                if (typeof this.$store.state.editingListId === "undefined" || !this.$store.state.editingListId) {
+                    needRedirect = true;
+                }
                 this.$store.commit('saveCurrentlyEditingToLocalStorage');
                 // this.$store.commit('updateLocalStoreTodoListData');
+                /*g*/console.log('needRedirect'); //todo remove it
+                /*g*/console.log(needRedirect); //todo remove it
                 if (closeEditor) {
                     this.$router.push('/');
+                } else {
+                    if (needRedirect) {
+                        /*g*/console.log('this.$store.state.editingListId'); //todo remove it
+                        /*g*/console.log(this.$store.state.editingListId); //todo remove it
+                        this.$router.push( '/change/' + this.$store.state.editingListId)
+                    }
                 }
 
             },
@@ -219,7 +228,6 @@
                 }
             },
             addNewItem() {
-                console.log('ggg')
                 this.adderStyle.height = '50px';
                 this.$forceUpdate();
             }
@@ -229,12 +237,7 @@
                 if (this.$refs.noteTextAdder.checkEmptyText()) {
                     this.$dialog.alert('Add some text before saving');
                 } else {
-                    let itemId = this.$store.state.currentlyEditingList.itemNewId;
                     // this.$store.state.currentlyEditingList.itemNewId++;
-                    /*g*/console.log('this.$store.state.currentlyEditingList.itemNewId'); //todo remove it
-                    /*g*/console.log(this.$store.state.currentlyEditingList.itemNewId); //todo remove it
-                    /*g*/console.log('itemId'); //todo remove it
-                    /*g*/console.log(itemId); //todo remove it
                     this.$store.commit('saveCurrentlyEditingListNoteInVuex',
                         {
                             // itemId: itemId,
@@ -252,7 +255,7 @@
                 if (this.$refs.todoRenamer.checkEmptyText()) {
                     this.$dialog.alert('Todo name can\'t be empty ');
                 } else {
-                    this.$store.state.currentlyEditingList.name = this.$refs.todoRenamer.getText();
+                    this.$store.commit('setListName', {name: this.$refs.todoRenamer.getText()});
                     this.nameChanging = false;
                 }
             },

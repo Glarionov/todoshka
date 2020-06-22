@@ -1,11 +1,25 @@
 <template>
     <div class="text-editor-tdl-wrapper">
         <div class="changer-textarea-wrapper" v-if="changing">
-            <div class="changer-textarea-wrapper">
+            <img src="@/assets/images/undo.svg"
+                 @click="undoTextEdition"
+                 class="undo-text-edition"
+                 :class="[{blocked: !canUndoText}]"
+                 alt="undo" title="undo last text edition">
+            <img src="@/assets/images/undo.svg"
+                 class="redo-text-edition"
+                 @click="redoTextEdition"
+                 :class="[{blocked: !canRedoText}]"
+                 alt="redo" title="redo last text edition">
+
+            <div class="changer-textarea-wrapper"
+            @keyup.enter = "pushTextState"
+            >
             <textarea-autosize
                     :placeholder="placeHolder"
                     ref="myTextarea"
-                    @change="handleTextChangeBlur"
+                    @change="handleTextChange"
+                    @paste="handleTextChange"
                     @keyup.native="handleTextChange"
                     @keyup.native.space="enterClicked()"
                     class="changer-textarea"
@@ -14,14 +28,11 @@
             />
                 </div>
             <div class="text-editing-bottom-part">
-
-
                 <span class="saving-button-wrapper" :class="{blocked: emptyText}" :title="saveButtonTitle">
                     <slot name="save" ref="saveButton"></slot>
                 </span>
-
                 <slot></slot>
-                <div class="characters-left-message">{{charactersLeftMessage}}</div>
+                <div  class="characters-left-message">{{charactersLeftMessage}}</div>
             </div>
         </div>
     </div>
@@ -40,7 +51,9 @@
                 charactersLeftMessage: '',
                 charactersLeftToStartAlert: 30,
                 currentlyChangingTextValue: '',
-                emptyText: true
+                emptyText: true,
+                doneText: [],
+                undoneText: []
             }
         },
         props: {
@@ -63,12 +76,34 @@
                     return 'Add some text before saving it'
                 }
                 return '';
+            },
+            canUndoText() {
+                return this.doneText.length > 1;
+            },
+            canRedoText() {
+                return this.undoneText.length > 0;
             }
         },
         created() {
           this.currentlyChangingTextValue = this.currentlyChangingText;
+          this.doneText = [this.currentlyChangingTextValue];
         },
         methods: {
+            undoTextEdition() {
+                if (this.canUndoText) {
+                    this.undoneText.push(this.currentlyChangingTextValue);
+                    this.doneText.pop()
+                    this.currentlyChangingTextValue = this.doneText[this.doneText.length - 1];
+                }
+
+            },
+            redoTextEdition() {
+                if (this.canRedoText) {
+                    this.currentlyChangingTextValue = this.undoneText.pop();
+                    this.doneText.push(this.currentlyChangingTextValue);
+                }
+
+            },
             enterClicked() {
                 /*g*/console.log('this.$parent'); //todo remove it
                 /*g*/console.log(this.$parent); //todo remove it
@@ -90,9 +125,9 @@
             },
             stopTextEditing() {
                 this.changing = false;
-                /*g*/console.log('this.changing'); //todo remove it
-                /*g*/console.log(this.changing); //todo remove it
-                // this.$parent.
+            },
+            pushTextState() {
+                this.doneText.push(this.currentlyChangingTextValue);
             },
             handleTextChange() {
                 let textLength = this.currentlyChangingTextValue.length;
@@ -111,21 +146,12 @@
                 let charactersLeft = this.maxNoteLength - textLength;
                 let newInfoMessage = '';
 
-
-                /*g*/console.log('charactersLeft'); //todo remove it
-                /*g*/console.log(charactersLeft); //todo remove it
                 if (charactersLeft < this.charactersLeftToStartAlert) {
                     newInfoMessage += `${charactersLeft} characters left`;
                 } else {
                     console.log('b')
                 }
                 this.charactersLeftMessage = newInfoMessage;
-            },
-            handleTextChangeBlur() {
-                console.log('hhbb')
-            },
-            changeTodoItem() {
-                console.log('ctdi')
             }
         }
     }
