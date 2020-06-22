@@ -320,6 +320,11 @@ const router = new VueRouter({
 //   store
 // }).$mount('#app')
 
+Vue.filter('properShowNewLine', function (value) {
+  // return value.replace(/(?:\r\n|\r|\n)/g, '<br>')
+  return `<pre>${value}<pre>`;
+})
+
 store.dispatch('attempt', localStorage.getItem('abc')).then(() => {
   new Vue({
     // el: '#app',
