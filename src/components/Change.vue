@@ -242,7 +242,7 @@
                         {
                             // itemId: itemId,
                             newData:
-                            {name: this.$refs.noteTextAdder.currentlyChangingTextValue, done: false}})
+                            {name: this.$refs.noteTextAdder.getText(), done: false}})
                     this.newTodoItemName = '';
                     this.$refs.noteTextAdder.clearTextEditing();
                     this.$forceUpdate();

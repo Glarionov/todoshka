@@ -113,7 +113,7 @@
               return this.emptyText;
             },
             getText() {
-                return this.currentlyChangingTextValue;
+                return this.currentlyChangingTextValue.replace(/(?:\r\n|\r|\n)/g, '<br>');
             },
             startTextEditing() {
                 this.handleTextChange();
