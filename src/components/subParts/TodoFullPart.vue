@@ -19,8 +19,7 @@
 
                             <div class="cancel-item-editing todo-text-edit-button default-button" v-on:click="stopTextEditing">Cancel</div>
                         </TextEditorTDL>
-                        <div class="simple-text" v-else>
-                            {{partData.name}}
+                        <div class="simple-text" v-html="$options.filters.properShowNewLine(partData.name)" v-else>
                         </div>
                     </div>
 <!--                    <textarea ref="tt" @keyup="cctt" :style="ts"/>-->

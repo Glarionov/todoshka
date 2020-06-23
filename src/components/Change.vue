@@ -125,7 +125,7 @@
                 /*g*/console.log(this.$store.state.editingListId); //todo remove it
                 // this.loadData(this.$store.state.editingListId)
             } else {
-                this.nameChanging = true;
+                // this.nameChanging = true;
                 this.newList = true;
                 // this.$store.commit('setCurrentlyEditingList', {});
                 this.$store.commit('emptyState');
@@ -134,6 +134,11 @@
                 /*g*/console.log(this.$store.state.editingListId); //todo remove it
             }
             // this.done = [];
+        },
+        mounted() {
+                    if (this.newList) {
+                        this.openNameEditing();
+                    }
         },
         computed: {
             scrollablePage: () => {

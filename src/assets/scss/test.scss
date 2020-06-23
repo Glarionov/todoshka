@@ -22,7 +22,8 @@ $mainButtonColor: #ad3d12;
 }
 
 html {
-  background: #fff0b7;
+  //background: #fff0b7;
+  background: #063e29;
 }
 #app textarea {
   font-family: Verdana, Geneva, sans-serif, Avenir, Helvetica, Arial;
@@ -40,6 +41,7 @@ html, body {
 
 header {
   background: brown;
+  background: #cc5e1b;
   width: 100%;
   color: white;
   font-size: 30px;
@@ -85,7 +87,7 @@ header {
   margin-top: 33px;
   padding: 13px;
   background: #f5cb69;
-  border-radius: 10px;
+  border-radius: 2px;
 }
 
 .todo-short-top-part {
@@ -368,15 +370,25 @@ cursor: pointer;
   }
 }
 
-.default-button {
+.default-button, .dg-btn {
   background: $mainButtonColor;
   color: #ffe8dd;
   cursor: pointer;
   user-select: none;
   text-align: center;
+
+
   &:hover {
     background: #7b2606;
   }
+}
+
+.dg-btn--ok {
+  border-color: black;
+}
+
+.dg-main-container {
+  background: #ffb160;
 }
 
 .blocked {
@@ -460,3 +472,13 @@ cursor: pointer;
   margin-left: 20px;
   transform: scale(-1, 1);
 }
+
+.dg-content {
+  font-size: 23px;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+//.dg-btn {
+//  color: #e6c587;
+//  background: $mainButtonColor;
+//}

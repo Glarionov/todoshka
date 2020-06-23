@@ -25,23 +25,7 @@ import Main from './components/Main.vue'
 import Change from './components/Change.vue'
 
 import VuexUndoRedo  from './assets/js/undoRedo';
-import exampleData from "./assets/js/smallExampleData";
-/*g*/console.log('exampleData'); //todo remove it
-/*g*/console.log(exampleData); //todo remove it
 Vue.use(VuexUndoRedo );
-/*g*/console.log('VuexUndoRedo '); //todo remove it
-/*g*/console.log(VuexUndoRedo ); //todo remove it
-
-// new Vuex.Store({
-//   state: {
-//     myVal: null
-//   },
-//   mutations: {
-//     emptyState() {
-//       this.replaceState({ myval: null });
-//     }
-//   }
-// });
 
 const store = new Vuex.Store({
       data: function () {
@@ -68,8 +52,6 @@ const store = new Vuex.Store({
         state.token = token
       },
     emptyState() {
-      /*g*/console.log('this.baseEditingList'); //todo remove it
-      /*g*/console.log(this.baseEditingList); //todo remove it
 
       this.replaceState({
         myval: null, count: 0, todoListData: {}, todoListNewId: 1, currentlyEditingList: {
@@ -79,29 +61,6 @@ const store = new Vuex.Store({
         },
         editingListId: 0
       });
-    },
-    saveTodoList(state, payload) {
-
-
-      /*g*/console.log('state'); //todo remove it
-      /*g*/console.log(state); //todo remove it
-      /*g*/console.log('payload'); //todo remove it
-      /*g*/console.log(payload); //todo remove it
-      // let newId;
-      // if (typeof payload.itemNewId === "undefined") {
-      //   newId = state.todoListNewId;
-      //   state.todoListNewId++;
-      // } else {
-      //   newId = payload.itemNewId;
-      // }
-      // if (typeof payload.newData['itemNewId']  == "undefined" ) {
-      //   payload.newData['itemNewId'] = 1;
-      // }
-      // state.todoListData[newId] = payload.newData;
-
-
-      // this.commit('updateLocalStoreTodoListData')
-      // localStorage.setItem('todoListData', JSON.stringify(state.todoListData))
     },
     getAndUpdateItemId(state, payload) {
       if (typeof payload.listId !== "undefined") {
@@ -142,26 +101,13 @@ const store = new Vuex.Store({
         } else {
           itemId = payload.itemId;
         }
-        /*g*/console.log('=payload'); //todo remove it
-        /*g*/console.log(payload); //todo remove it
         // state.currentlyEditingList.list[itemId] = payload.newData;
-        /*g*/console.log('state.currentlyEditingList'); //todo remove it
-        /*g*/console.log(state.currentlyEditingList); //todo remove it
 
         state.currentlyEditingList.list[itemId] = Object.assign({}, payload.newData);
-        /*g*/console.log('----state.currentlyEditingList'); //todo remove it
-        /*g*/console.log(state.currentlyEditingList); //todo remove it
 
       }
 
     },
-    saveCurrentlyEditingListInVuex(state, payload) {
-      /*g*/console.log('state.currentlyEditingList'); //todo remove it
-      /*g*/console.log(state.currentlyEditingList); //todo remove it
-      /*g*/console.log('payload'); //todo remove it
-      /*g*/console.log(payload); //todo remove it
-    },
-
     saveTodoItem(state, payload) {
       if (typeof payload.listId !== "undefined") {
         let itemId;
@@ -173,14 +119,11 @@ const store = new Vuex.Store({
         }
         state.todoListData[payload.listId]['list'][itemId] = payload.newData;
         state.todoListNewId++;
-        console.log('state.todoListData['+payload.listId+']['+itemId+']');
         localStorage.setItem('todoListData', JSON.stringify(state.todoListData))
       }
     },
     updateLocalStoreTodoListData(state) {
 
-      /*g*/console.log('JSON.stringify(state.todoListData)'); //todo remove it
-      /*g*/console.log(JSON.stringify(state.todoListData)); //todo remove it
       localStorage.setItem('todoListData', JSON.stringify(state.todoListData))
     },
     saveCurrentlyEditingToLocalStorage(state) {
@@ -194,15 +137,11 @@ const store = new Vuex.Store({
           state.editingListId = parseInt(newListId);
         }
         let newId = state.editingListId + 1;
-/*g*/console.log('newId'); //todo remove it
-/*g*/console.log(newId); //todo remove it
         localStorage.setItem('newListId', newId + '');
       }
 
       let storageListData = JSON.parse(localStorage.getItem('todoListData'));
 
-      /*g*/console.log('storageListData'); //todo remove it
-      /*g*/console.log(storageListData); //todo remove it
       if (typeof storageListData === "undefined" || !storageListData) {
         storageListData = {};
       }
@@ -216,43 +155,19 @@ const store = new Vuex.Store({
       delete storageListData[state.editingListId];
       localStorage.setItem('todoListData', JSON.stringify(storageListData))
     },
-    // deleteListFromLocalStorage(state, payload) {
-    //   if (typeof  payload.listId !== "undefined") {
-    //     let storageListData = JSON.parse(localStorage.getItem('todoListData'));
-    //     delete storageListData[payload.listId ];
-    //     localStorage.setItem('todoListData', JSON.stringify(storageListData))
-    //   }
-
-    // },
-
     getFromLocalStoreTodoListData(state) {
       state.todoListData = JSON.parse(localStorage.getItem('todoListData'));
     },
-    addTodoList({commit}) {
-      /*g*/console.log('commit'); //todo remove it
-      /*g*/console.log(commit); //todo remove it
-      // commit({})
-    },
     deleteTodoItem(state, payload) {
-      /*g*/console.log('||||state.todoListData'); //todo remove it
-      /*g*/console.log(state.todoListData); //todo remove it
       delete state.currentlyEditingList.list[payload.itemId];
-      /*g*/console.log('_____state.todoListData'); //todo remove it
-      /*g*/console.log(state.todoListData); //todo remove it
     },
     changeDoneStatus(state, payload) {
-      /*g*/console.log('payload'); //todo remove it
-      /*g*/console.log(payload); //todo remove it
       state.currentlyEditingList.list[payload.itemId].done = payload.status;
-      /*g*/console.log('state.currentlyEditingList'); //todo remove it
-      /*g*/console.log(state.currentlyEditingList); //todo remove it
-
+      state.currentlyEditingList = JSON.parse(JSON.stringify(state.currentlyEditingList))
     }
   },
   actions: {
         deleteTodoItemUsingStorage({commit}, payload) {
-          /*g*/console.log('payload'); //todo remove it
-          /*g*/console.log(payload); //todo remove it
           commit('deleteTodoItem', payload);
           commit('updateLocalStoreTodoListData');
         },
@@ -264,21 +179,6 @@ const store = new Vuex.Store({
     commit('increment')
 
         },
-    addTodoList({commit}) {
-          /*g*/console.log('commit'); //todo remove it
-          /*g*/console.log(commit); //todo remove it
-        // commit({})
-    },
-
-
-    async attempt({commit, state}, token) {
-      console.log('token = '+ token);
-      console.log(state
-      )
-      if (token) {
-        commit('SET_TOKEN', token)
-      }
-    },
     pushMainState() {
 
     }
@@ -287,13 +187,6 @@ const store = new Vuex.Store({
 })
 
 
-
-console.log(store
-)
-console.log(VueRouter
-)
-console.log(Test
-)
 const router = new VueRouter({
   mode: 'history',
   routes: [
@@ -307,25 +200,16 @@ const router = new VueRouter({
 });
 
   router.beforeEach((to, from, next) => {
-    /* It will change the title when the router is change*/
     if (to.meta.title) {
       document.title = to.meta.title;
     }
     next();
   });
 
-// new Vue({
-//   render: h => h(App),
-//    router,
-//   store
-// }).$mount('#app')
-
 Vue.filter('properShowNewLine', function (value) {
-  // return value.replace(/(?:\r\n|\r|\n)/g, '<br>')
-  return `<pre>${value}<pre>`;
+  return value.replace(/(?:\r\n|\r|\n)/g, '<br>')
 })
 
-store.dispatch('attempt', localStorage.getItem('abc')).then(() => {
   new Vue({
     // el: '#app',
     // components: { App },
@@ -334,5 +218,4 @@ store.dispatch('attempt', localStorage.getItem('abc')).then(() => {
     render: h => h(App),
     // subscriber
   }).$mount('#app');
-})
 
