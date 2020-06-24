@@ -1,4 +1,4 @@
-# tr3
+# Todoshka
 
 ## Project setup
 ```
