@@ -1,4 +1,4 @@
-# Short todo list using localstorage (no server or database usage)
+# Short todo list using localstorage (no database usage)
 
 ## Project setup
 ```
