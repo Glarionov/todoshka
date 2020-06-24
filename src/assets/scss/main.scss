@@ -2,45 +2,48 @@
 
 $mainButtonColor: #ad3d12;
 
+html {
+  background: #f5eccd;
+  color: #2c3e50;
+}
 
 #app {
-  /*font-family: Avenir, Helvetica, Arial, sans-serif;*/
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  /*background: rgb(31, 1, 53);*/
-  /*background: rgb(160,160,100);*/
-
   width: 100%;
   height: 100%;
   font-family: Verdana, Geneva, sans-serif, Avenir, Helvetica, Arial;
-  //font-size: 16px;
 }
 
 #app, #app textarea {
   font-size: 16px;
 }
 
-html {
-  //background: #fff0b7;
-  background: #063e29;
-}
 #app textarea {
   font-family: Verdana, Geneva, sans-serif, Avenir, Helvetica, Arial;
-  /*border: 0 none white;*/
-  /*overflow: hidden;*/
-  /*padding: 0;*/
-  /*outline: none;*/
   background-color: #f9e7d4;
+}
+
+a {
+  text-decoration: none;
+}
+
+.change-wrapper {
+  background: #f5cb69;
 }
 
 html, body {
   height: 100%;
-  margin: 0px;
+  margin: 0;
+}
+
+.whole-content {
+  width: 94vw;
+  margin: auto;
+  max-width: 900px;
 }
 
 header {
-  background: brown;
   background: #cc5e1b;
   width: 100%;
   color: white;
@@ -55,8 +58,6 @@ header {
   border-radius: 3px;
   display: inline-block;
   margin-top: 20px;
-  //@include makeParamGrowingFromMinTosMax(height, 40, 100);
-  //@include makeParamGrowingFromMinTosMax(width, 120, 300);
 
   text-align: center;
   color: white;
@@ -75,8 +76,6 @@ header {
   opacity: 0.5;
   position: absolute;
   z-index: 4;
-  //display: none;
-
 }
 
 .add-new-includer {
@@ -91,8 +90,8 @@ header {
 }
 
 .todo-short-top-part {
-  background:   #fbb000;
-  width: 90%;
+  @include togglePropertyUnderAndAboveMediumScreen(width, 95%, 90%);
+  background: #fbb000;
   padding: 10px;
   display: flex;
   justify-content: space-between;
@@ -102,17 +101,25 @@ header {
   width: 100px;
   height: 100px;
   background: blue;
-  //content: '';
 }
 
 .todo-full-part-wrapper, .todo-short-part-wrapper {
   display: flex;
-
   background: #ffdc8b;
-
   margin-bottom: 10px;
   margin-top: 10px;
   padding: 5px;
+}
+
+.expand-shrink-text {
+  margin-top: 10px;
+  color: #75340c;
+  opacity: 0.5;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .todo-full-part-wrapper {
@@ -120,29 +127,26 @@ header {
 }
 
 .todo-bottom-left-part {
-  @include togglePropertyUnderAndAboveMediumScreen(width, 100%, 77%);
+  @include togglePropertyUnderAndAboveMediumScreen(width, calc(100% - 100px), 77%);
   @include togglePropertyUnderAndAboveMediumScreen(margin-left, 2px, 10px);
 }
 
 .todo-short-part-wrapper {
-
   margin-left: 10px;
-  //height: 33px;
   width: 77%;
+  @include togglePropertyUnderAndAboveMediumScreen(width, 95%, 77%);
+  @include togglePropertyUnderAndAboveMediumScreen(margin-left, 2px, 10px);
   background: #ffdc8b;
   overflow: hidden;
-  //&:after {
-  //  border-top: 40px solid white;
-  //  border-left: 40px solid red;
-  //  content: '';
-  //  position: absolute;
-  //  right: 0;
-  //}
 }
 
 .part-data-name-and-checkbox {
   display: flex;
-  width: 100%;
+  word-wrap: break-word;
+}
+
+.todo-top-part-text, .part-data-name-and-checkbox {
+  width: calc(100% - 100px);
 }
 
 .vert-centered-outer {
@@ -155,15 +159,6 @@ header {
   display: table-cell;
 }
 
-.change-wrapper {
-  //color: white;
-}
-
-.todo-top-part-text {
-
-  width: 100%;
-}
-
 .name-changer-textarea-wrapper {
   width: 95%;
 }
@@ -172,60 +167,24 @@ header {
   @include makeParamGrowingFromMinTosMax(font-size, 18, 26, false, false, true) ;
 }
 
-a {  text-decoration: none;}
-
-.adder-button-wrapper .vert-centered-outer{
+.adder-button-wrapper .vert-centered-outer {
   width: 100%;
-
-
-}
-
-.whole-content {
-  width: 94vw;
-  margin: auto;
-  max-width: 900px;
-  //background: rgba(255, 234, 116, 0.99);
-
 }
 
 .top-short-changer {
   display: inline-block;
   margin-right: 15px;
-  //background: #ff7800;
-  //@include makeParamGrowingFromMinTosMax(height, 25, 50);
-}
-
-.top-short-deleter {
-  //background: red;
-
-  //@include makeParamGrowingFromMinTosMax(height, 25, 50);
 }
 
 .todo-short-top-main-icons {
   display: flex;
   align-items: baseline;
   margin-left: 20px;
-
-}
-
-.part-data-name-and-checkbox {
-
-}
-
-.part-data-name {
-
-  max-height: 2.2rem;
-  overflow: hidden;
-  //background: blue;
 }
 
 .part-data-name-and-expander {
   margin-left: 10px;
-}
-
-.part-data-checkbox {
-  //width: 1.4em;
-  //height: 1.4em;
+  overflow: auto;
 }
 
 .todo-short-top-main-icons, .todo-short-top-main-icons a {
@@ -236,12 +195,10 @@ a {  text-decoration: none;}
   position: relative;
 }
 
-
 .top-short-deleter, .top-short-changer {
   display: inline-block;
-//padding: 5px;
-border-radius: 5px;
-cursor: pointer;
+  border-radius: 5px;
+  cursor: pointer;
 
 }
 
@@ -249,15 +206,6 @@ cursor: pointer;
   width: 18px;
   height: 18px;
 }
-
-//@media screen and (max-width: 900px) {
-//  .top-short-deleter-text, .top-short-changer-text {
-//    display: none;
-//  }
-//  .top-short-icon {
-//    display: block;
-//  }
-//}
 
 .adder-button-wrapper {
   cursor: pointer;
@@ -277,21 +225,16 @@ cursor: pointer;
 
 .changer-textarea-wrapper, .simple-text {
   display: inline-block;
-  width: 95%;
+  width: 100%;
   height: 100%;
-
 }
 
 .todo-item-text {
   width: 100%;
 }
 
-.simple-text {
-  //white-space: nowrap;
-  //overflow: hidden;
-  //text-overflow: ellipsis;
-  //display: block;
-  //width: calc(100% - 250px);
+.simple-text, .todo-top-part-text, .todo-short-part-wrapper {
+  word-wrap: break-word;
 }
 
 .textarea {
@@ -331,16 +274,24 @@ cursor: pointer;
   span {
     margin-left: 2px;
   }
-  //margin-left: 20px;
-  //align-self: center;
 }
 
 .top-short-icon, .top-name-changer, .top-todolist-deleter {
-  opacity: 0.7;
+  opacity: 0.8;
+
   &:hover {
     opacity: 1;
   }
 }
+
+.todo-full-part-wrapper .top-short-icon {
+  opacity: 0.4;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
 
 .top-todolist-deleter {
   margin-top: 3px;
@@ -349,15 +300,20 @@ cursor: pointer;
 .list-save-cancel-delete-buttons {
   display: flex;
   width: 100%;
-  //background: #fdc891;
   padding: 10px;
   margin-top: 10px;
   box-sizing: border-box;
 
   max-width: 600px;
   justify-content: space-between;
+
   .default-button {
     padding: 6px 12px;
+  }
+
+  &.bottom-buttons {
+    margin-top: 40px;
+    padding: 0;
   }
 }
 
@@ -365,6 +321,7 @@ cursor: pointer;
   textarea {
     width: 50%;
   }
+
   .default-button {
     width: 100px;
   }
@@ -377,7 +334,6 @@ cursor: pointer;
   user-select: none;
   text-align: center;
 
-
   &:hover {
     background: #7b2606;
   }
@@ -387,8 +343,17 @@ cursor: pointer;
   border-color: black;
 }
 
-.dg-main-container {
+.dg-main-content {
   background: #ffb160;
+}
+
+.dg-content-body {
+  border-color: #7d4019;
+}
+
+.dg-content {
+  font-size: 23px;
+  font-family: Helvetica, Arial, sans-serif;
 }
 
 .blocked {
@@ -404,9 +369,11 @@ cursor: pointer;
 
 .new-item-adder {
   margin-top: 20px;
+
   textarea {
     width: 80%;
   }
+
   .default-button {
     margin-top: 3px;
     padding: 6px 12px;
@@ -428,6 +395,7 @@ cursor: pointer;
   align-self: flex-start;
   margin-left: 14px;
   margin-top: 14px;
+
   .undo-button, .redo-button {
     margin-top: 4px;
     width: $undoSquareSizePx;
@@ -435,6 +403,7 @@ cursor: pointer;
     line-height: $undoSquareSizePx;
     border-radius: $undoSquareSizePx;
     opacity: 0.9;
+
     &:hover {
       opacity: 1;
     }
@@ -446,12 +415,12 @@ cursor: pointer;
 
   .blocked {
     opacity: 0.2;
+
     &:hover {
       opacity: 0.2;
     }
   }
 }
-
 
 
 .todo-change-page-bottom-part {
@@ -463,6 +432,7 @@ cursor: pointer;
   width: 20px;
   height: 20px;
   cursor: pointer;
+
   &.blocked {
     opacity: 0.3;
   }
@@ -472,13 +442,3 @@ cursor: pointer;
   margin-left: 20px;
   transform: scale(-1, 1);
 }
-
-.dg-content {
-  font-size: 23px;
-  font-family: Helvetica, Arial, sans-serif;
-}
-
-//.dg-btn {
-//  color: #e6c587;
-//  background: $mainButtonColor;
-//}

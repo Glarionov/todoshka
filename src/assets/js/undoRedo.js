@@ -15,12 +15,13 @@ module.exports = {
         };
       },
       created() {
+        let notSavingMutations = [EMPTY_STATE, 'getFromLocalStoreTodoListData', 'saveCurrentlyEditingToLocalStorage'];
         if (this.$store) {
           this.$store.subscribe(mutation => {
-            if (mutation.type !== 'getFromLocalStoreTodoListData' && mutation.type !== EMPTY_STATE && this.ignoreMutations.indexOf(mutation.type) === -1) {
+            if (!notSavingMutations.includes(mutation.type) && this.ignoreMutations.indexOf(mutation.type) === -1) {
               this.done.push(mutation);
             }
-            if (this.newMutation) {
+            if (this.newMutation && mutation.type !== 'saveCurrentlyEditingToLocalStorage') {
               this.undone = [];
             }
           });
@@ -38,8 +39,6 @@ module.exports = {
         redo() {
           let commit = this.undone.pop();
           this.newMutation = false;
-          /*g*/console.log('commit'); //todo remove it
-          /*g*/console.log(commit); //todo remove it
 
           switch (typeof commit.payload) {
             case 'object':

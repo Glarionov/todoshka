@@ -3,11 +3,10 @@
         <div class="list-save-button default-button" v-on:click="saveListChanges">
             Save and exit
         </div>
-
         <div class="list-save-button default-button" v-on:click="saveListChanges(false)">
             Save
         </div>
-        <div class="list-cancel-button default-button" v-on:click="cancelNameChanges">
+        <div class="list-cancel-button default-button" v-on:click="cancelTodoChanges">
             Cancel editing
         </div>
     </div>
@@ -15,24 +14,17 @@
 
 <script>
     export default {
+        name: "SaveCancelDeleteButtons",
         props: {
             extraClass: String
         },
         methods: {
             saveListChanges(closeEditor = true) {
-              this.$parent.saveListChanges(closeEditor);
-          }  ,
-            cancelNameChanges() {
-              this.$parent.cancelNameChanges();
+                this.$parent.saveListChanges(closeEditor);
             },
-            cancelEditing() {
-
+            cancelTodoChanges() {
+                this.$parent.cancelTodoChanges();
             }
-        },
-        name: "SaveCancelDeleteButtons"
+        }
     }
 </script>
-
-<style scoped>
-
-</style>

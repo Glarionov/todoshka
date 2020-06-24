@@ -21,7 +21,6 @@
                     @change="handleTextChange"
                     @paste="handleTextChange"
                     @keyup.native="handleTextChange"
-                    @keyup.native.space="enterClicked()"
                     class="changer-textarea"
                     v-model="currentlyChangingTextValue"
                     :maxlength="maxNoteLength"
@@ -39,35 +38,37 @@
 </template>
 
 <script>
-    import {TimelineLite} from "gsap";
 
+    /**
+     *  Provides textarea expanding vertically by it's content,
+     *  "undo" and "redo" commands for editor
+     *  and field to show amount of characters left
+     */
     export default {
         name: "TextEditorTDL",
+        props: {
+            currentlyChangingText: {
+                type: String,
+                default: ''
+            },
+            placeHolder: {
+                type: String,
+                default: 'add text here'
+            },
+            maxNoteLength: {
+                type: Number,
+                default: 200
+            }
+        },
         data: function () {
             return {
                 changing: true,
-                gsapObject: new TimelineLite(),
-
                 charactersLeftMessage: '',
                 charactersLeftToStartAlert: 30,
                 currentlyChangingTextValue: '',
                 emptyText: true,
-                doneText: [],
+                doneText: [''],
                 undoneText: []
-            }
-        },
-        props: {
-          currentlyChangingText: {
-              type: String,
-              default: ''
-          },
-            placeHolder: {
-              type: String,
-                default: 'add text here'
-            },
-            maxNoteLength: {
-              type: Number,
-                default: 100
             }
         },
         computed: {
@@ -89,6 +90,12 @@
           this.doneText = [this.currentlyChangingTextValue];
         },
         methods: {
+            /**
+             *  Adds new element in states array for undo-redo actions
+             */
+            pushTextState() {
+                this.doneText.push(this.currentlyChangingTextValue);
+            },
             undoTextEdition() {
                 if (this.canUndoText) {
                     this.undoneText.push(this.currentlyChangingTextValue);
@@ -102,18 +109,12 @@
                     this.currentlyChangingTextValue = this.undoneText.pop();
                     this.doneText.push(this.currentlyChangingTextValue);
                 }
-
-            },
-            enterClicked() {
-                /*g*/console.log('this.$parent'); //todo remove it
-                /*g*/console.log(this.$parent); //todo remove it
-                // this.$parent.$refs.saveButton.click()
             },
             checkEmptyText() {
               return this.emptyText;
             },
             getText() {
-                return this.currentlyChangingTextValue.replace(/(?:\r\n|\r|\n)/g, '<br>');
+                return this.currentlyChangingTextValue;
             },
             startTextEditing() {
                 this.handleTextChange();
@@ -122,41 +123,26 @@
             clearTextEditing() {
                 this.currentlyChangingTextValue = '';
                 this.emptyText = true;
+                this.doneText = [''];
+                this.undoneText = [];
             },
             stopTextEditing() {
                 this.changing = false;
             },
-            pushTextState() {
-                this.doneText.push(this.currentlyChangingTextValue);
-            },
+            /**
+             * Handles text change after pressing key, pasting, etc.
+             */
             handleTextChange() {
                 let textLength = this.currentlyChangingTextValue.length;
-
-                if (textLength) {
-                    if (/\S/.test(this.currentlyChangingTextValue)) {
-                        this.emptyText = false;
-                    } else {
-                        this.emptyText = true;
-                    }
-
-                } else {
-                    this.emptyText = true;
-                }
-
                 let charactersLeft = this.maxNoteLength - textLength;
-                let newInfoMessage = '';
+                this.emptyText = !!(!textLength || !/\S/.test(this.currentlyChangingTextValue));
 
+                let newCharactersLeftMessage = '';
                 if (charactersLeft < this.charactersLeftToStartAlert) {
-                    newInfoMessage += `${charactersLeft} characters left`;
-                } else {
-                    console.log('b')
+                    newCharactersLeftMessage += `${charactersLeft} characters left`;
                 }
-                this.charactersLeftMessage = newInfoMessage;
+                this.charactersLeftMessage = newCharactersLeftMessage;
             }
         }
     }
 </script>
-
-<style scoped>
-
-</style>
