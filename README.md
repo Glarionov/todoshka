@@ -1,4 +1,4 @@
-# Todoshka
+# Short todo list using localstorage (no server or database usage)
 
 ## Project setup
 ```
